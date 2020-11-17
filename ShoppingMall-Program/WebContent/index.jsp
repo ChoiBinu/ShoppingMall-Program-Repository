@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,7 +56,7 @@
 				}
 		}
 		%></tr><%
-		%> <br> <%
+		%><br><%
 	%>
 	</table>
 	
@@ -71,9 +72,10 @@
 				}
 		}
 				%></tr><%
-				%> <br> <%
+				%><br><%
 	%>
 	</table>
+	<br>
 
 	<table border="1">
 	<%
@@ -89,9 +91,98 @@
 			count--;
 		}
 				%></tr><%
-				%> <br> <%
 	%>
 	</table>
+	<br>
+	<%
+		%><table border = "1"><%
+		int first_Num = 0;
+		int second_Num = 1;
+		int sum_Num=0;
+		int count_Num=1;
+		for(;;){
+			if(count_Num <= 11){
+				for(int i = 1; i<=3; i ++){
+				sum_Num = first_Num + second_Num;
+				first_Num = second_Num;
+				second_Num = sum_Num;
+				%>
+				<td>
+				<%=first_Num%>
+				</td>
+				<%
+				}
+				count_Num++;
+			}
+			else {
+				break;
+			}
+			%></tr><%
+		}
+		%></table><%
+		%><br> <br><%	
+	%>
 	
+	<%
+	
+try{
+    //step1 load the driver class
+    Class.forName("oracle.jdbc.driver.OracleDriver");
+
+    //step2 create  the connection object
+    Connection con=DriverManager.getConnection(
+    "jdbc:oracle:thin:@localhost:1521:xe","SMC_USER","SMC_USER");
+
+    //step3 create the statement object
+    Statement stmt=con.createStatement();
+
+    //step4 execute query
+    String query = "SELECT " +
+    			   "PRODUCT.ID,PRODUCT.CATEGORY_ID,PRODUCT.NAME,PRODUCT.PRICE,PRODUCT.STOCK,PRODUCT.DESCRIPTION,PRODUCT.ORIGIN,CATEGORY.ID,CATEGORY.NAME " +
+    			   "FROM " +
+    			   "PRODUCT,CATEGORY " +
+    			   "WHERE " +
+    			   "CATEGORY.ID = PRODUCT.CATEGORY_ID ";
+    ResultSet rs=stmt.executeQuery(query);
+    %><table border = "1"><%
+    %><tr><%
+    %><td> PRODUCT_ID</td><%
+    %><td> CATEGORY_NAME </td><%
+    %><td> PRODUCT_NAME </td><%
+    %><td> PRODUCT_PRICE </td><%
+    %><td> PRODUCT_STOCK </td><%
+    %><td> PRODUCT_DESCRIPTION </td><%
+    %><td> PRODUCT_ORIGIN </td><%
+    %></tr><%
+    while(rs.next()) {
+    %><tr><%
+    %><td> <%= rs.getInt(1)%> </td><%
+   	%><td> <%= rs.getString(9)%> </td><%
+   	%><td> <%= rs.getString(3)%> </td><%
+   	%><td> <%= rs.getInt(4)%> </td><%
+   	%><td> <%= rs.getInt(5)%> </td><%
+   	%><td> <%= rs.getString(6)%> </td><%
+   	%><td> <%= rs.getString(7)%> </td><%
+    %></tr><%
+    }
+    
+    //System.out.println(rs.getInt("ID") 
+    		//+ "," + 
+    		//rs.getInt("CATEGORY_ID") 
+    		//+ "," + 
+    		//rs.getString("NAME") 
+    		//+ "," + 
+    		//rs.getInt("PRICE") 
+    		//+ "," + 
+    		//rs.getInt("STOCK") 
+    		//+ "," + 
+    		//rs.getString("DESCRIPTION") 
+    		//+ "," + 
+    		//rs.getString("ORIGIN"));
+    //step5 close the connection object
+    %></table><%
+    con.close();
+    }catch(Exception e){ System.out.println(e);}
+%>
 </body>
 </html>
