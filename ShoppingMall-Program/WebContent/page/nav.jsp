@@ -9,6 +9,7 @@
 			<li><a href="index.jsp?section=payment_list">판매 목록</a></li>
 			<li><a href="index.jsp?section=payment_list_by_product">상품별 판매 목록</a></li>
 			<li><a href="index.jsp?section=payment_list_by_category">카테고리별 판매 목록</a></li>
+			<li><a href="index.jsp?section=category_create">카테고리추가</a></li>
 			<li><a href="index.jsp">홈으로</a></li>
 		</ul>
 	</nav>

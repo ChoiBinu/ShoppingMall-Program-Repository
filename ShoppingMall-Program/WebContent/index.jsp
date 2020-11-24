@@ -38,6 +38,9 @@
 		case "payment_list_by_category":
 			%> <%@ include file="section/payment_list_by_category.jsp" %> <%
 			break;
+		case "category_create":
+			%> <%@ include file="section/category_create.jsp" %> <%
+			break;
 		
 		default:
 			%>
